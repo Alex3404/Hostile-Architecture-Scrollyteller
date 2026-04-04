@@ -5,11 +5,22 @@ import { createStaggeredTimeline, createStaggeredImageTimeline } from "./stagger
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Initialize Lenis for smooth scrolling
+// Detect touch device
+const isTouchDevice = () => {
+  return (
+    navigator.maxTouchPoints > 0 ||
+    (window.matchMedia && window.matchMedia("(pointer: coarse)").matches)
+  );
+};
+
+const isTouch = isTouchDevice();
+
+// Initialize Lenis for smooth scrolling with mobile optimization
 const lenis = new Lenis({
-  duration: 1.2,
+  duration: isTouch ? 1.5 : 1.2,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smoothWheel: true,
+  touchMultiplier: isTouch ? 2 : 1, // Increase responsiveness on touch
 });
 
 function raf(time: number) {
@@ -22,6 +33,19 @@ requestAnimationFrame(raf);
 lenis.on("scroll", ScrollTrigger.update);
 gsap.ticker.add((time) => {
   lenis.raf(time * 1000);
+});
+
+// Disable scroll during animations on touch devices
+document.addEventListener("touchmove", (e) => {
+  const target = e.target as HTMLElement;
+  // Allow scrolling on interactive elements like buttons
+  if (
+    !target.closest(".quiz-btn") &&
+    !target.closest(".cta-btn") &&
+    !target.closest("button")
+  ) {
+    // Smooth scroll will still be handled by Lenis
+  }
 });
 
 // Automatically detect dev vs production
