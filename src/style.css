@@ -254,8 +254,8 @@ main {
   border-radius: 1rem;
   padding: 3rem;
   max-width: 700px;
-  width: 70%;
-  height: auto;
+  width: auto;
+  height: 50%;
 }
 
 .quiz-title {
