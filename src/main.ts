@@ -4,7 +4,8 @@ import { createStaggeredTimeline, createStaggeredImageTimeline } from "./stagger
 
 gsap.registerPlugin(ScrollTrigger);
 
-const debugMode = false; // Set to false for production
+// Automatically detect dev vs production
+const debugMode = import.meta.env.DEV; // true in dev, false in production/GH Pages
 
 // Global animation settings
 const PAGE_TITLE_APPEAR_TIME = 0.0;
