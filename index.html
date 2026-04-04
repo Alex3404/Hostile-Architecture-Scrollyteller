@@ -10,10 +10,16 @@
 </head>
 
 <body>
+  <div class="global-background">
+    <video autoplay muted loop playsinline>
+      <source src="/videos/background.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="background-overlay"></div>
   <main>
     <!-- Page 1: Title Page -->
     <section class="pinned-scroll-section page-1">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="intro">
           <h1 class="title">Hostile Architecture</h1>
@@ -24,7 +30,7 @@
 
     <!-- Page 2: Introduction/History -->
     <section class="pinned-scroll-section page-2">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="section-content">
           <h2 class="section-title">What is Hostile Architecture?</h2>
@@ -45,7 +51,7 @@
 
     <!-- Page 2 Images: Additional Images Section 1 -->
     <section class="scroll-section page-2-images-1">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="image-grid">
           <div class="section-image-container staggered-image">
@@ -63,7 +69,7 @@
 
     <!-- Page 2 Images: Additional Images Section 2 -->
     <section class="scroll-section page-2-images-2">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="image-grid">
           <div class="staggered-image">
@@ -83,9 +89,27 @@
       </div>
     </section>
 
+    <!-- Quiz Section 1 -->
+    <section class="pinned-scroll-section quiz-section quiz-1">
+      <div class="content-layer">
+        <div class="quiz-container">
+          <h2 class="quiz-title">Test Your Knowledge</h2>
+          <div class="quiz-question">
+            <p class="quiz-text">Which of these is NOT an example of hostile architecture?</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-answer="false">Anti-skateboarding knobs on ledges</button>
+              <button class="quiz-btn" data-answer="true">Comfortable public seating in parks</button>
+              <button class="quiz-btn" data-answer="false">Anti-homeless spikes in alcoves</button>
+              <button class="quiz-btn" data-answer="false">Removal of public benches</button>
+            </div>
+            <div class="quiz-feedback" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Page 3: The Spikes Controversy -->
     <section class="pinned-scroll-section page-3">
-      <div class="background-layer"></div>
       <div class="content-layer">
         <div class="section-content">
           <h2 class="section-title">The London Spikes Controversy</h2>
@@ -100,7 +124,7 @@
     </section>
 
     <section class="scroll-section page-3-images-1">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="image-grid">
           <div class="staggered-image">
@@ -123,7 +147,7 @@
 
     <!-- Page 4: Public outcry and public response -->
     <section class="pinned-scroll-section page-4">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="section-content">
           <h2 class="section-title">Protests and Advocacy of Hostile Architecture</h2>
@@ -138,7 +162,7 @@
     </section>
 
     <section class="scroll-section page-4-images-1">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="image-grid">
           <div class="staggered-image">
@@ -161,7 +185,7 @@
 
     <!-- Page 5: Why It Matters -->
     <section class="pinned-scroll-section page-5">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="section-content">
           <h2 class="section-title">Why It Matters Today</h2>
@@ -177,7 +201,7 @@
 
     <!-- Page 6: The Real Impact -->
     <section class="pinned-scroll-section page-6">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="section-content">
           <h2 class="section-title">Impact on Homelessness</h2>
@@ -190,9 +214,28 @@
       </div>
     </section>
 
+    <!-- Quiz Section 2 -->
+    <section class="scroll-section quiz-section quiz-2">
+      <div class="content-layer">
+        <div class="quiz-container">
+          <h2 class="quiz-title">What Have You Learned?</h2>
+          <div class="quiz-question">
+            <p class="quiz-text">Does hostile architecture actually solve homelessness?</p>
+            <div class="quiz-options">
+              <button class="quiz-btn" data-answer="false">Yes, it eliminates the problem</button>
+              <button class="quiz-btn" data-answer="true">No, it only displaces people to other areas</button>
+              <button class="quiz-btn" data-answer="false">Yes, it teaches people responsibility</button>
+              <button class="quiz-btn" data-answer="false">Yes, with proper enforcement</button>
+            </div>
+            <div class="quiz-feedback" style="display:none;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Page 7: The Solution -->
     <section class="pinned-scroll-section page-7">
-      <div class="background-layer"></div>
+
       <div class="content-layer">
         <div class="section-content">
           <h2 class="section-title">Moving Forward</h2>
@@ -201,6 +244,36 @@
             nets, and including affected communities in design decisions. Adaptive designs that accommodate
             everyone—rather than exclude—demonstrate how spaces can support rather than punish vulnerable populations.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call-to-Action Hub -->
+    <section class="pinned-scroll-section cta-section">
+      <div class="content-layer">
+        <div class="cta-container">
+          <h2 class="section-title">Take Action Today</h2>
+          <p class="section-text">You can help address hostile architecture and support unhoused communities</p>
+
+          <div class="cta-grid">
+            <div class="cta-card">
+              <h3 class="cta-title">📍 Resources for homelessness </h3>
+              <p>Find support services and information for unhoused individuals</p>
+              <a href="https://www.survivinghomelessness.com" target="_blank" class="cta-btn">Learn More</a>
+            </div>
+
+            <div class="cta-card">
+              <h3 class="cta-title">🏠 Support Housing Initiatives</h3>
+              <p>Support local affordable housing and homeless advocacy programs</p>
+              <a href="https://homelessutah.org/" target="_blank" class="cta-btn">Find Organizations</a>
+            </div>
+
+            <div class="cta-card">
+              <h3 class="cta-title">📚 Educate Others</h3>
+              <p>Share this scrollyteller and spread awareness in your community</p>
+              <button class="cta-btn" id="share-btn">Share This</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
