@@ -76,7 +76,8 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 1rem 3rem 3rem 3rem;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  box-sizing: border-box;
 }
 
 /* ===== PAGE 1: Title Page ===== */
@@ -252,9 +253,13 @@ main {
   background: rgba(20, 50, 89, 0.95);
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-radius: 1rem;
-  padding: 3rem;
-  max-width: 700px;
+  padding: 2rem;
+  max-width: 600px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
 }
 
 .quiz-title {
@@ -334,13 +339,14 @@ main {
 
 /* ===== CALL-TO-ACTION SECTION ===== */
 .cta-section {
-  height: 100%;
-  padding: 4rem 2rem;
+  height: auto;
+  padding: 2rem;
 }
 
 .cta-container {
-  max-width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .cta-grid {
