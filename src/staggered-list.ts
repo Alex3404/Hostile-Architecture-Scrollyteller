@@ -1,3 +1,4 @@
+// @ts-expect-error - Import needed for type annotations with verbatimModuleSyntax
 import gsap from "gsap";
 
 /**
