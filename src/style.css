@@ -1,0 +1,280 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #000;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow-x: hidden;
+}
+
+main {
+  width: 100%;
+  height: auto;
+}
+
+/* Scroll Section Base Styles */
+.scroll-section {
+  position: relative;
+  height: auto;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pinned-scroll-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: -1px;
+}
+
+/* Background Layer - fills entire section */
+.background-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  height: auto;
+  min-width: 100%;
+  min-height: 100%;
+  background-size: cover;
+  z-index: 1;
+}
+
+/* Content Layer - sits on top of background */
+.content-layer {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem 3rem 3rem 3rem;
+}
+
+/* ===== PAGE 1: Title Page ===== */
+.intro {
+  text-align: center;
+  max-width: 90%;
+}
+
+.title {
+  font-size: clamp(10vw, 5vh, 20vw);
+  font-weight: 900;
+  margin: 0 0 1rem 0;
+  letter-spacing: 2px;
+  opacity: 0;
+}
+
+.byline {
+  font-size: clamp(1rem, 3vw, 2rem);
+  font-weight: 300;
+  letter-spacing: 4px;
+  margin: 1rem 0 0 0;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* ===== PAGE 2: What is hostile architecture? ===== */
+.page-2 .section-list {
+  flex: 0 1 auto;
+  width: 100%;
+}
+
+.page-2-images-1,
+.page-3-images-1,
+.page-4-images-1 {
+  margin-top: -25vh;
+}
+
+.page-2-images-1 .background-layer,
+.page-3-images-1 .background-layer,
+.page-4-images-1 .background-layer {
+  min-height: calc(101% - 25vh);
+  top: 25vh;
+}
+
+
+
+.page-3-images-1 .image-grid .section-image {
+  max-height: 50vh;
+}
+
+/* ===== PAGE 4 Images ===== */
+.page-4-images-1 .image-grid .section-image {
+  max-height: 60vh;
+}
+
+/* ===== Staggered List Animation ===== */
+.staggered-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.staggered-item {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+
+/* ===== Images Sections ===== */
+.image-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  gap: 5rem;
+  width: 100%;
+  height: auto;
+  box-sizing: border-box;
+  place-items: center;
+}
+
+.image-grid .section-image {
+  max-height: 350px;
+}
+
+/* ===== PAGE 1-6: Gradient Backgrounds ===== */
+.page-1 .background-layer {
+  background: linear-gradient(180deg, #4A5F8F 0%, #445A89 100%);
+}
+
+.page-2 .background-layer {
+  background: linear-gradient(180deg, #445A89 0%, #3E5583 100%);
+}
+
+.page-2-images-1 .background-layer {
+  background: linear-gradient(180deg, #3E5583 0%, #38507D 100%);
+}
+
+.page-2-images-2 .background-layer {
+  background: linear-gradient(180deg, #38507D 0%, #324B77 100%);
+}
+
+.page-3 .background-layer {
+  background: linear-gradient(180deg, #324B77 0%, #2C4671 100%);
+}
+
+.page-3-images-1 .background-layer {
+  background: linear-gradient(180deg, #2C4671 0%, #26416B 100%);
+}
+
+.page-4 .background-layer {
+  background: linear-gradient(180deg, #26416B 0%, #203C65 100%);
+}
+
+.page-4-images-1 .background-layer {
+  background: linear-gradient(180deg, #203C65 0%, #1A375F 100%);
+}
+
+.page-5 .background-layer {
+  background: linear-gradient(180deg, #1A375F 0%, #143259 100%);
+}
+
+.page-6 .background-layer {
+  background: linear-gradient(180deg, #143259 0%, #4A5F8F 100%);
+}
+
+.page-7 .background-layer {
+  background: linear-gradient(180deg, #4A5F8F 0%, #0E2D53 100%);
+}
+
+/* Section Content Styling */
+.section-content {
+  max-width: 70%;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.section-title {
+  font-size: clamp(4vw, 1.5vw, 5rem);
+  margin: 2rem 0 0.5rem 0;
+  text-align: center;
+  position: relative;
+  font-weight: 700;
+}
+
+.section-text {
+  font-size: clamp(2.5vh, 2.5vw, 2.5rem);
+  text-align: center;
+  font-weight: 300;
+  line-height: 1.8;
+  margin: 1.0rem 0 0 0;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.section-content {
+  position: relative;
+  flex: 1 1 0%;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  display: block;
+  margin-bottom: 15%;
+}
+
+.section-image-container {
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  height: fit-content;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 1rem;
+  box-sizing: border-box;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-image {
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+  margin-top: 0rem;
+  border-radius: 1rem;
+  border-color: #fff;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.section-image-title {
+  max-width: 100%;
+  text-align: center;
+  font-size: clamp(4vh, 2vw, 2.5rem);
+  font-weight: 300;
+  margin: 0;
+}
+
+/* ===== Staggered Image Animation ===== */
+.staggered-image {
+  max-width: 100%;
+  max-height: 100%;
+  padding: 1rem;
+}
+
+/* Responsive adjustments for smaller screens */
+/* @media (max-width: 800px) {
+  .section-content {
+    max-width: 95%;
+    padding: 0 1rem;
+  }
+
+  .section-text {
+    font-size: 1rem;
+  }
+} */
+
+@media (max-width: 800px) {
+  .image-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
