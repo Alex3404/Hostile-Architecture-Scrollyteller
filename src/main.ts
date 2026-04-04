@@ -157,7 +157,7 @@ const page3Timeline = gsap.timeline({
     start: "top top",
     end: "bottom -=50% top",
     scrub: 1.2,
-    markers: true,
+    markers: debugMode,
     pin: true,
   },
 });
@@ -220,7 +220,7 @@ const page4Timeline = gsap.timeline({
     start: "top top",
     end: "bottom -=50% top",
     scrub: 1.2,
-    markers: true,
+    markers: debugMode,
     pin: true,
   },
 });
@@ -283,7 +283,7 @@ const page5Timeline = gsap.timeline({
     start: "top top",
     end: "bottom -=50% top",
     scrub: 1.2,
-    markers: true,
+    markers: debugMode,
     pin: true,
   },
 });
@@ -325,7 +325,7 @@ const page6Timeline = gsap.timeline({
     start: "top top",
     end: "bottom -=50% top",
     scrub: 1.2,
-    markers: false,
+    markers: debugMode,
     pin: true,
   },
 });
