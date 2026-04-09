@@ -56,7 +56,7 @@ const PAGE_TITLE_APPEAR_TIME = 0.0;
 const PAGE_TITLE_DURATION = 1.0;
 
 // ===== PAGE 1: TITLE PAGE ANIMATION =====
-const PAGE_1_TITLE_APPEAR_TIME = 0.0;
+const PAGE_1_TITLE_APPEAR_TIME = 0.5;
 const PAGE_1_TITLE_ANIMATION_DURATION = 2.0;
 const PAGE_1_BYLINE_APPEAR_TIME = 0.5;
 const PAGE_1_BYLINE_ANIMATION_DURATION = 2.0;
@@ -72,6 +72,21 @@ const page1Timeline = gsap.timeline({
   },
 });
 
+// Animate scroll prompt in first
+page1Timeline.fromTo(
+  ".scroll-prompt",
+  {
+    opacity: 1,
+    y: 0,
+    duration: 1.0,
+  },
+  {
+    opacity: 0,
+    y: 50,
+  },
+  0.0
+)
+
 // Animate title in with dramatic scale and opacity
 page1Timeline.fromTo(
   ".title",
@@ -86,7 +101,7 @@ page1Timeline.fromTo(
     scale: 1,
     duration: PAGE_1_TITLE_ANIMATION_DURATION
   },
-  PAGE_1_TITLE_APPEAR_TIME
+  PAGE_1_TITLE_APPEAR_TIME + 0.8
 )
 
 // Animate byline in with slight delay
@@ -102,7 +117,7 @@ page1Timeline.fromTo(
     y: 0,
     duration: PAGE_1_BYLINE_ANIMATION_DURATION
   },
-  PAGE_1_BYLINE_APPEAR_TIME
+  PAGE_1_BYLINE_APPEAR_TIME + 0.8
 )
 
 
