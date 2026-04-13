@@ -2,6 +2,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 import { createStaggeredTimeline } from "./staggered-list";
+import { affordabilityChart } from "./chart-controller";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -37,15 +38,7 @@ gsap.ticker.add((time) => {
 
 // Disable scroll during animations on touch devices
 document.addEventListener("touchmove", (e) => {
-  const target = e.target as HTMLElement;
-  // Allow scrolling on interactive elements like buttons
-  if (
-    !target.closest(".quiz-btn") &&
-    !target.closest(".cta-btn") &&
-    !target.closest("button")
-  ) {
-    // Smooth scroll will still be handled by Lenis
-  }
+
 });
 
 // Automatically detect dev vs production
@@ -70,7 +63,7 @@ const intro_timeline = gsap.timeline({
   scrollTrigger: {
     trigger: ".intro-page",
     start: "top top",
-    end: "bottom top",
+    end: "center center",
     scrub: 0.2,
     pin: true,
     markers: debugMode, // Set to true for debugging
@@ -140,8 +133,8 @@ document.querySelectorAll('section').forEach((section) => {
 const ctaTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: ".cta-section",
-    start: "top +=75% top",
-    end: "bottom top",
+    start: "top top",
+    end: "center center",
     scrub: 1.2,
     markers: debugMode,
     pin: false,
@@ -190,8 +183,23 @@ ctaCards.forEach((card, index) => {
   );
 });
 
+window.addEventListener('load', () => {
+  try {
+    // Initialize the chart immediately
+    affordabilityChart.initialize({
+      containerId: 'stats-chart-container',
+      yearStart: 2001,
+      yearEnd: 2025,
+    });
+
+    console.log('Chart animation timeline created successfully');
+  } catch (error) {
+    console.error('Error initializing statistics chart:', error);
+  }
+});
+
 // ===== Section Animations =====
-type SectionContentType = 'section-title' | 'section-text' | 'section-list';
+type SectionContentType = 'section-title' | 'section-text' | 'section-list' | 'chart-container' | 'chart-legend';
 function createSectionTimeline(section: HTMLElement): gsap.core.Timeline {
   let is_pinned = section.classList.contains("pinned-section");
   console.log(`Creating timeline for ${section.className} with pinning: ${is_pinned}`);
@@ -223,7 +231,12 @@ function createSectionTimeline(section: HTMLElement): gsap.core.Timeline {
         ? 'section-text'
         : child.classList.contains('section-list')
           ? 'section-list'
-          : null;
+          : child.classList.contains('chart-container')
+            ? 'chart-container'
+            : child.classList.contains('chart-legend')
+              ? 'chart-legend'
+              : null;
+
 
     if (type === 'section-title') {
       animate_section_title(child as HTMLElement, timeline);
@@ -236,6 +249,28 @@ function createSectionTimeline(section: HTMLElement): gsap.core.Timeline {
         LIST_DURATION,
         LIST_ITEM_DELAY,
         INTRO_APPEAR_TIME + 0.5
+      );
+    } else if (type === 'chart-container') {
+      timeline.fromTo(
+        child as HTMLElement,
+        { opacity: 0, y: 50, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.0 },
+        0.4
+      ).to(
+        child as HTMLElement,
+        { opacity: 1, y: 0, scale: 1, duration: 2.0 },
+        1.4
+      );
+    } else if (type === 'chart-legend') {
+      timeline.fromTo(
+        child as HTMLElement,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1.0 },
+        0.6
+      ).to(
+        child as HTMLElement,
+        { opacity: 1, y: 0, duration: 2.0 },
+        1.6
       );
     }
   });
@@ -436,3 +471,6 @@ if (shareBtn) {
     }
   });
 }
+
+// Refresh ScrollTrigger after all timelines are created to ensure proper calculations
+ScrollTrigger.refresh();
