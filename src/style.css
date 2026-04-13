@@ -62,7 +62,7 @@ main {
   justify-content: center;
 }
 
-.pinned-scroll-section {
+.pinned-section {
   position: relative;
   height: 100vh;
   overflow: hidden;
@@ -110,7 +110,7 @@ main {
 }
 
 /* Scroll Prompt */
-.scroll-prompt {
+.scroll-hint {
   margin-top: 4rem;
   display: flex;
   flex-direction: column;
@@ -155,18 +155,18 @@ main {
 }
 
 /* ===== PAGE 2: What is hostile architecture? ===== */
-.page-2 .section-list {
+.background-info-page .section-list {
   flex: 0 1 auto;
   width: 100%;
 }
 
 
-.page-3-images-1 .image-grid .section-image {
+.london-controversy-images-1 .image-section .section-image {
   max-height: 50vh;
 }
 
 /* ===== PAGE 4 Images ===== */
-.page-4-images-1 .image-grid .section-image {
+.page-4-images-1 .image-section .section-image {
   max-height: 60vh;
 }
 
@@ -183,7 +183,7 @@ main {
 }
 
 /* ===== Images Sections ===== */
-.image-grid {
+.image-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
@@ -194,7 +194,7 @@ main {
   place-items: center;
 }
 
-.image-grid .section-image {
+.image-section .section-image {
   max-height: 350px;
 }
 
@@ -274,7 +274,7 @@ main {
 }
 
 @media (max-width: 800px) {
-  .image-grid {
+  .image-section {
     grid-template-columns: 1fr;
     gap: 2rem;
   }

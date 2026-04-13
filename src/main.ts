@@ -1,7 +1,7 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
-import { createStaggeredTimeline, createStaggeredImageTimeline } from "./staggered-list";
+import { createStaggeredTimeline } from "./staggered-list";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,18 +52,23 @@ document.addEventListener("touchmove", (e) => {
 const debugMode = import.meta.env.DEV; // true in dev, false in production/GH Pages
 
 // Global animation settings
-const PAGE_TITLE_APPEAR_TIME = 0.0;
-const PAGE_TITLE_DURATION = 1.0;
+const INTRO_APPEAR_TIME = 0.0;
+const INTRO_DURATION = 1.0;
+
+const LIST_ITEM_DELAY = 1.5;
+const LIST_DURATION = 4.0;
+const IMAGES_DURATION = 1.0;
+const IMAGES_DELAY = 0.5;
 
 // ===== PAGE 1: TITLE PAGE ANIMATION =====
-const PAGE_1_TITLE_APPEAR_TIME = 0.5;
-const PAGE_1_TITLE_ANIMATION_DURATION = 2.0;
-const PAGE_1_BYLINE_APPEAR_TIME = 0.5;
-const PAGE_1_BYLINE_ANIMATION_DURATION = 2.0;
+const INTRO_TITLE_TIME = 0.5;
+const INTRO_TITLE_DURATION = 2.0;
+const INTRO_BYLINE_TIME = 0.5;
+const INTRO_BYLINE_DURATION = 2.0;
 
-const page1Timeline = gsap.timeline({
+const intro_timeline = gsap.timeline({
   scrollTrigger: {
-    trigger: ".page-1",
+    trigger: ".intro-page",
     start: "top top",
     end: "bottom top",
     scrub: 0.2,
@@ -72,9 +77,9 @@ const page1Timeline = gsap.timeline({
   },
 });
 
-// Animate scroll prompt in first
-page1Timeline.fromTo(
-  ".scroll-prompt",
+// Animate scroll hint in first
+intro_timeline.fromTo(
+  ".scroll-hint",
   {
     opacity: 1,
     y: 0,
@@ -88,7 +93,7 @@ page1Timeline.fromTo(
 )
 
 // Animate title in with dramatic scale and opacity
-page1Timeline.fromTo(
+intro_timeline.fromTo(
   ".title",
   {
     opacity: 0,
@@ -99,13 +104,13 @@ page1Timeline.fromTo(
     opacity: 1,
     y: 0,
     scale: 1,
-    duration: PAGE_1_TITLE_ANIMATION_DURATION
+    duration: INTRO_TITLE_DURATION
   },
-  PAGE_1_TITLE_APPEAR_TIME + 0.8
+  INTRO_TITLE_TIME + 0.8
 )
 
 // Animate byline in with slight delay
-page1Timeline.fromTo(
+intro_timeline.fromTo(
   ".byline",
   {
     opacity: 0,
@@ -115,472 +120,21 @@ page1Timeline.fromTo(
   {
     opacity: 1,
     y: 0,
-    duration: PAGE_1_BYLINE_ANIMATION_DURATION
+    duration: INTRO_BYLINE_DURATION
   },
-  PAGE_1_BYLINE_APPEAR_TIME + 0.8
+  INTRO_BYLINE_TIME + 0.8
 )
 
 
-// ===== PAGE 2: FADE IN CONTENT =====
-const PAGE_2_LIST_START_TIME = 1.0;
-const PAGE_2_LIST_ITEM_DELAY = 1.5;
-const PAGE_2_LIST_DURATION = 4.0;
+// ===== AUTO-GENERATE TIMELINES FOR ALL SECTIONS =====
+document.querySelectorAll('section').forEach((section) => {
+  // Skip the intro page (special case with custom animation)
+  if (section.classList.contains('intro-page')) {
+    return;
+  }
 
-const page2Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-2",
-    start: "top top",
-    end: "bottom -=50% top",
-    scrub: 1.2,
-    markers: debugMode,
-    pin: true,
-  },
+  createSectionTimeline(section);
 });
-
-page2Timeline.fromTo(
-  ".page-2 .section-title",
-  {
-    opacity: 0,
-    x: "-50px",
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    x: 0,
-    duration: PAGE_TITLE_DURATION
-  },
-  PAGE_TITLE_APPEAR_TIME
-)
-
-// Animate list items in with staggered effect using reusable function
-createStaggeredTimeline(
-  page2Timeline,
-  ".page-2",
-  ".staggered-item",
-  PAGE_2_LIST_DURATION,
-  PAGE_2_LIST_ITEM_DELAY,
-  PAGE_2_LIST_START_TIME
-);
-
-// ===== PAGE 2 Images: Additional Images Section 1 =====
-const PAGE_2_IMAGES_DURATION = 1.0;
-const PAGE_2_IMAGES_ITEM_DELAY = 0.5;
-
-const page2Images1Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-2-images-1",
-    start: "top +=75% top",
-    end: "bottom +=75% top",
-    scrub: 1.2,
-    markers: debugMode,
-    pin: false, // No pinning for image section
-  },
-});
-
-// Animate images with staggered effect using reusable function
-createStaggeredImageTimeline(
-  page2Images1Timeline,
-  ".page-2-images-1",
-  ".staggered-image",
-  PAGE_2_IMAGES_DURATION,
-  PAGE_2_IMAGES_ITEM_DELAY,
-  0
-);
-
-// ===== PAGE 2 Images: Additional Images Section 2 =====
-const page2Images2Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-2-images-2",
-    start: "top +=75% top",
-    end: "bottom +=75% top",
-    scrub: 1.2,
-    markers: debugMode,
-    pin: false, // No pinning for image section
-  },
-});
-
-// Animate images with staggered effect using reusable function
-createStaggeredImageTimeline(
-  page2Images2Timeline,
-  ".page-2-images-2",
-  ".staggered-image",
-  PAGE_2_IMAGES_DURATION,
-  PAGE_2_IMAGES_ITEM_DELAY,
-  0
-);
-
-// ===== QUIZ 1: ANIMATION =====
-const quiz1Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".quiz-1",
-    start: "top top",
-    end: "bottom top",
-    scrub: 1.0,
-    markers: debugMode,
-    pin: true,
-  },
-});
-
-quiz1Timeline.fromTo(
-  ".quiz-1 .quiz-container",
-  {
-    opacity: 0,
-    y: 50,
-    scale: 0.95,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    duration: 1.0,
-  },
-  0
-).to(
-  ".quiz-1 .quiz-container",
-  {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    duration: 3.0,
-  },
-  1.0
-);
-
-quiz1Timeline.fromTo(
-  ".quiz-1 .quiz-title",
-  {
-    opacity: 0,
-    x: "-30px",
-  },
-  {
-    opacity: 1,
-    x: 0,
-    duration: 1.0,
-  },
-  0.25
-).to(
-  ".quiz-1 .quiz-title",
-  {
-    opacity: 1,
-    x: 0,
-    duration: 3.0,
-  },
-  1.25
-);
-
-// ===== PAGE 3: TRANSITION & CONTENT =====
-const page3Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-3",
-    start: "top top",
-    end: "bottom -=50% top",
-    scrub: 1.2,
-    markers: debugMode,
-    pin: true,
-  },
-});
-
-page3Timeline.fromTo(
-  ".page-3 .section-title",
-  {
-    opacity: 0,
-    x: "-50px",
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    x: 0,
-    duration: PAGE_TITLE_DURATION
-  },
-  PAGE_TITLE_APPEAR_TIME
-)
-
-page3Timeline.fromTo(
-  ".page-3 .section-text",
-  {
-    opacity: 0,
-    y: 30,
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    duration: 1.5
-  },
-  PAGE_TITLE_APPEAR_TIME + 0.5
-);
-
-// ===== PAGE 3 Images =====
-const page3Images1Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-3-images-1",
-    start: "top +=75% top",
-    end: "bottom +=75% top",
-    scrub: 1.2,
-    markers: debugMode,
-    pin: false, // No pinning for image section
-  },
-});
-
-createStaggeredImageTimeline(
-  page3Images1Timeline,
-  ".page-3-images-1",
-  ".staggered-image",
-  PAGE_2_IMAGES_DURATION,
-  PAGE_2_IMAGES_ITEM_DELAY,
-  0.0
-)
-
-// ===== PAGE 4: TRANSITION & CONTENT =====
-const page4Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-4",
-    start: "top top",
-    end: "bottom -=50% top",
-    scrub: 1.2,
-    markers: debugMode,
-    pin: true,
-  },
-});
-
-page4Timeline.fromTo(
-  ".page-4 .section-title",
-  {
-    opacity: 0,
-    x: "-50px",
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    x: 0,
-    duration: PAGE_TITLE_DURATION
-  },
-  PAGE_TITLE_APPEAR_TIME
-)
-
-page4Timeline.fromTo(
-  ".page-4 .section-text",
-  {
-    opacity: 0,
-    y: 30,
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    duration: 1.5
-  },
-  PAGE_TITLE_APPEAR_TIME + 0.5
-);
-
-// ===== PAGE 4 Images =====
-const page4Images1Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-4-images-1",
-    start: "top +=75% top",
-    end: "bottom +=75% top",
-    scrub: 1.2,
-    markers: debugMode,
-    pin: false, // No pinning for image section
-  },
-});
-
-createStaggeredImageTimeline(
-  page4Images1Timeline,
-  ".page-4-images-1",
-  ".staggered-image",
-  PAGE_2_IMAGES_DURATION,
-  PAGE_2_IMAGES_ITEM_DELAY,
-  0.0
-)
-
-// ===== PAGE 5: TRANSITION & CONTENT =====
-const page5Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-5",
-    start: "top top",
-    end: "bottom -=50% top",
-    scrub: 1.2,
-    markers: debugMode,
-    pin: true,
-  },
-});
-
-page5Timeline.fromTo(
-  ".page-5 .section-title",
-  {
-    opacity: 0,
-    x: "-50px",
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    x: 0,
-    duration: PAGE_TITLE_DURATION
-  },
-  PAGE_TITLE_APPEAR_TIME
-)
-
-page5Timeline.fromTo(
-  ".page-5 .section-text",
-  {
-    opacity: 0,
-    y: 30,
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    duration: 1.5
-  },
-  PAGE_TITLE_APPEAR_TIME + 0.5
-);
-
-// ===== PAGE 6: FINAL TRANSITION & CONTENT =====
-const page6Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-6",
-    start: "top top",
-    end: "bottom -=50% top",
-    scrub: 1.2,
-    markers: debugMode,
-    pin: true,
-  },
-});
-
-page6Timeline.fromTo(
-  ".page-6 .section-title",
-  {
-    opacity: 0,
-    x: "-50px",
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    x: 0,
-    duration: PAGE_TITLE_DURATION
-  },
-  PAGE_TITLE_APPEAR_TIME
-)
-
-page6Timeline.fromTo(
-  ".page-6 .section-text",
-  {
-    opacity: 0,
-    y: 30,
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    duration: 1.5
-  },
-  PAGE_TITLE_APPEAR_TIME + 0.5
-);
-
-
-// ===== QUIZ 2: ANIMATION =====
-const quiz2Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".quiz-2",
-    start: "top top",
-    end: "bottom top",
-    scrub: 1.0,
-    markers: debugMode,
-    pin: true,
-  },
-});
-
-quiz2Timeline.fromTo(
-  ".quiz-2 .quiz-container",
-  {
-    opacity: 0,
-    y: 50,
-    scale: 0.95,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    duration: 1.0,
-  },
-  0
-).to(
-  ".quiz-2 .quiz-container",
-  {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    duration: 3.0,
-  },
-  1.0
-);
-
-quiz2Timeline.fromTo(
-  ".quiz-2 .quiz-title",
-  {
-    opacity: 0,
-    x: "-30px",
-  },
-  {
-    opacity: 1,
-    x: 0,
-    duration: 1.0,
-  },
-  0.25
-).to(
-  ".quiz-2 .quiz-title",
-  {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    duration: 3.0,
-  },
-  1.25
-);
-
-
-// ===== PAGE 7: FINAL TRANSITION & CONTENT =====
-const page7Timeline = gsap.timeline({
-  scrollTrigger: {
-    trigger: ".page-7",
-    start: "top top",
-    end: "bottom -=50% top",
-    scrub: 1.2,
-    markers: false,
-    pin: true,
-  },
-});
-
-page7Timeline.fromTo(
-  ".page-7 .section-title",
-  {
-    opacity: 0,
-    x: "-50px",
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    x: 0,
-    duration: PAGE_TITLE_DURATION
-  },
-  PAGE_TITLE_APPEAR_TIME
-)
-
-page7Timeline.fromTo(
-  ".page-7 .section-text",
-  {
-    opacity: 0,
-    y: 30,
-    duration: 1,
-  },
-  {
-    opacity: 1,
-    y: 0,
-    duration: 1.5
-  },
-  PAGE_TITLE_APPEAR_TIME + 0.5
-);
 
 // ===== CALL-TO-ACTION: ANIMATION =====
 const ctaTimeline = gsap.timeline({
@@ -635,6 +189,194 @@ ctaCards.forEach((card, index) => {
     0.3 + index * 0.15
   );
 });
+
+// ===== Section Animations =====
+type SectionContentType = 'section-title' | 'section-text' | 'section-list';
+function createSectionTimeline(section: HTMLElement): gsap.core.Timeline {
+  let is_pinned = section.classList.contains("pinned-section");
+  console.log(`Creating timeline for ${section.className} with pinning: ${is_pinned}`);
+
+  let appear = section.getAttribute("appear") || "";
+  let length = section.getAttribute("length") || "";
+  console.log(`Section ${section.className} - appear: ${appear}, length: ${length}`);
+
+  const timeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: `top ${appear} top`,
+      end: is_pinned && length ? `bottom ${length}` : (is_pinned ? "bottom top" : "bottom bottom"),
+      scrub: 1.2,
+      markers: debugMode,
+      pin: is_pinned,
+    },
+  });
+
+  if (section.classList.contains('quiz-section')) {
+    animate_quiz_section(timeline, section as HTMLElement);
+  }
+
+  section.querySelectorAll('.section-content > *').forEach((child) => {
+    console.log(`Animating child element:`, child);
+    let type: SectionContentType | null = child.classList.contains('section-title')
+      ? 'section-title'
+      : child.classList.contains('section-text')
+        ? 'section-text'
+        : child.classList.contains('section-list')
+          ? 'section-list'
+          : null;
+
+    if (type === 'section-title') {
+      animate_section_title(child as HTMLElement, timeline);
+    } else if (type === 'section-text') {
+      animate_section_text(child as HTMLElement, timeline);
+    } else if (type === 'section-list') {
+      createStaggeredTimeline(
+        timeline,
+        child as HTMLElement,
+        LIST_DURATION,
+        LIST_ITEM_DELAY,
+        INTRO_APPEAR_TIME + 0.5
+      );
+    }
+  });
+
+  section.querySelectorAll('.image-section .staggered-image').forEach((image, index) => {
+    animate_section_image(image as HTMLElement, timeline, index);
+  });
+
+  return timeline;
+}
+
+function animate_section_image(image: HTMLElement, timeline: gsap.core.Timeline, index: number) {
+  const appearTime = IMAGES_DELAY * index;
+  // Alternate rotation direction for visual interest
+  const rotationAngle = index % 2 === 0 ? -50 : 50;
+  const finalRotation = index % 2 === 0 ? -5 : 5;
+
+  console.log(`Animating image with index ${index}:`, image);
+  timeline.fromTo(
+    image,
+    {
+      opacity: 0,
+      scale: 0.0,
+      rotate: rotationAngle,
+      duration: 0.3,
+    },
+    {
+      opacity: 1,
+      scale: 1,
+      rotate: finalRotation,
+    },
+    appearTime
+  ).to(
+    image,
+    {
+      opacity: 1,
+    },
+    IMAGES_DURATION - appearTime
+  );
+}
+
+function animate_section_title(child: HTMLElement, timeline: gsap.core.Timeline) {
+  timeline.fromTo(
+    child,
+    {
+      opacity: 0,
+      x: "-50px",
+      duration: 1,
+    },
+    {
+      opacity: 1,
+      x: 0,
+      duration: INTRO_DURATION
+    },
+    INTRO_APPEAR_TIME
+  )
+}
+
+function animate_section_text(child: HTMLElement, timeline: gsap.core.Timeline) {
+  timeline.fromTo(
+    child,
+    {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 1.5
+    },
+    INTRO_APPEAR_TIME + 0.5
+  );
+}
+
+
+// ===== QUIZ ANIMATION FUNCTION =====
+function animate_quiz_section(timeline: gsap.core.Timeline, element: HTMLElement): gsap.core.Timeline {
+  // Animate quiz container
+  let container = element.querySelector('.quiz-container') as HTMLElement;
+  if (!container) {
+    console.warn(`No .quiz-container found within "${element}". Skipping quiz animation.`);
+    return timeline; // Return existing timeline to avoid errors
+  }
+
+  let title = container.querySelector('.quiz-title') as HTMLElement;
+  if (!title) {
+    console.warn(`No .quiz-title found within "${element}". Skipping quiz title animation.`);
+    return timeline; // Return existing timeline to avoid errors
+  }
+
+  timeline.fromTo(
+    container,
+    {
+      opacity: 0,
+      y: 50,
+      scale: 0.95,
+    },
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 1.0,
+    },
+    0
+  ).to(
+    container,
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 3.0,
+    },
+    1.0
+  );
+
+  // Animate quiz title
+  timeline.fromTo(
+    title,
+    {
+      opacity: 0,
+      x: "-30px",
+    },
+    {
+      opacity: 1,
+      x: 0,
+      duration: 1.0,
+    },
+    0.25
+  ).to(
+    title,
+    {
+      opacity: 1,
+      x: 0,
+      duration: 3.0,
+    },
+    1.25
+  );
+
+  return timeline;
+}
 
 // ===== QUIZ FUNCTIONALITY =====
 document.querySelectorAll('.quiz-btn').forEach((button) => {
