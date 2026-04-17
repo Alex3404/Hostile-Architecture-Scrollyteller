@@ -51,7 +51,7 @@ export function createStaggeredTimeline(
 /**
  * Appends staggered animations for images to an existing timeline
  * @param timeline - Existing GSAP timeline to append animations to
- * @param containerSelector - CSS selector for the container (e.g., ".background-info-page-images-1")
+ * @param containerSelector - CSS selector for the container (e.g., ".images-1")
  * @param imageSelector - CSS selector for individual image containers (e.g., ".staggered-image")
  * @param duration - Total animation duration in seconds
  * @param itemDelay - Delay between each image animation in seconds

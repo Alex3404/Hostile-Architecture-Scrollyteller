@@ -18,7 +18,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: 0;
   overflow: hidden;
 }
 
@@ -50,6 +50,21 @@ main {
   -webkit-user-select: none;
   user-select: none;
   touch-action: manipulation;
+}
+
+.smooth-wrapper {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.smooth-content {
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
 }
 
 /* Scroll Section Base Styles */
@@ -93,7 +108,7 @@ main {
 }
 
 .title {
-  font-size: clamp(10vw, 5vh, 20vw);
+  font-size: clamp(8vw, 4.5vh, 18vw);
   font-weight: 900;
   margin: 0 0 1rem 0;
   letter-spacing: 2px;
@@ -121,15 +136,16 @@ main {
 }
 
 .scroll-text {
-  font-size: clamp(3vw, 3vh, 1rem);
+  font-size: clamp(3vw, 4vh, 5vh);
   font-weight: 300;
   letter-spacing: 2px;
   text-transform: uppercase;
+  text-align: center;
   margin: 0;
 }
 
 .arrow-down {
-  font-size: clamp(5vw, 4vw, 2rem);
+  font-size: clamp(5vw, 6vh, 20vw);
   animation: bounce 2s infinite;
 }
 
@@ -159,12 +175,12 @@ main {
 }
 
 
-.london-controversy-images-1 .image-section .section-image {
+.images-3 .image-section .section-image {
   max-height: 50vh;
 }
 
 /* ===== PAGE 4 Images ===== */
-.protests-images-1 .image-section .section-image {
+.images-4 .image-section .section-image {
   max-height: 60vh;
 }
 
@@ -197,7 +213,7 @@ main {
 
 /* Section Content Styling */
 .section-content {
-  max-width: 85%;
+  max-width: 100%;
   text-align: center;
   transform: translateY(30px);
 }
@@ -277,7 +293,7 @@ main {
   background: rgba(20, 50, 89, 0.95);
   border: 0.1rem solid rgba(255, 255, 255, 0.3);
   border-radius: 1rem;
-  padding: 2rem 1.5rem 2rem 1.5rem;
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
   max-width: clamp(50vw, 70vh, 600px);
   width: 100%;
   display: flex;
@@ -288,14 +304,14 @@ main {
 
 .quiz-title {
   font-size: clamp(3.5vh, 2.5vw, 3rem);
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1rem 0;
   text-align: center;
   color: #fff;
   font-weight: 700;
 }
 
 .quiz-text {
-  font-size: clamp(3vh, 3vw, 1rem);
+  font-size: clamp(2.5vh, 3vw, 1rem);
   margin: 1rem 0;
   text-align: center;
   font-weight: 500;
@@ -320,6 +336,25 @@ main {
   transition: all 0.3s ease;
   text-align: center;
   font-weight: 500;
+}
+
+@media(max-height: 500px) {
+  .quiz-btn {
+    padding: 0.5rem 1.0rem;
+    font-size: clamp(2.5vh, 2.5vw, 1rem);
+  }
+
+  .quiz-container {
+    padding: 1rem 1rem 1rem 1rem;
+  }
+
+  .quiz-title {
+    margin: 0 0 1rem 0;
+  }
+
+  .quiz-text {
+    margin: 0.5rem 0;
+  }
 }
 
 .quiz-btn:hover {
@@ -363,7 +398,7 @@ main {
 
 /* ===== CALL-TO-ACTION SECTION ===== */
 .cta-section {
-  height: auto;
+  min-height: 100vh;
   padding: 2rem;
 }
 
@@ -460,23 +495,14 @@ main {
   justify-content: center;
 }
 
-.statistics .section-content {
-  width: 100%;
-  max-width: 1000px;
-  opacity: 1;
-  transform: none;
-}
-
 .chart-container {
-  width: 80%;
-  max-width: 800px;
-  height: auto;
-  aspect-ratio: 16 / 9;
+  width: 75vw;
+  height: 55vh;
   margin: 1rem auto 1rem;
   padding: 1rem;
   background: rgba(20, 20, 30, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
   position: relative;
   display: flex;
@@ -490,7 +516,8 @@ main {
 }
 
 .chart-legend {
-  max-width: 800px;
+  width: 90vw;
+  max-width: 1000px;
   margin: 2rem auto 0;
   padding: 1.5rem 2rem;
   background: rgba(20, 20, 30, 0.6);
@@ -500,7 +527,7 @@ main {
 
 .chart-legend p {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: clamp(1.5vh, 2vw, 1rem);
   color: rgba(255, 255, 255, 0.8);
   line-height: 1.6;
 }

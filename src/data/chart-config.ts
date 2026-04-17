@@ -50,7 +50,7 @@ export function prepareChartData(options: ChartConfigOptions) {
     });
 
     const affordabilityDatasets = [{
-        label: 'Affordability Ratio (USA)',
+        label: 'Affordability Ratio (USA) ( Median Home Price ÷ Median Income )',
         data: affordabilityData_values,
         borderColor: 'rgba(54, 162, 235, 1)',
         backgroundColor: 'rgba(54, 162, 235, 0.1)',
@@ -85,7 +85,7 @@ export function createChartConfig(options: ChartConfigOptions) {
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             interaction: {
                 mode: 'index',
                 intersect: false,
@@ -158,12 +158,16 @@ export function createChartConfig(options: ChartConfigOptions) {
                     },
                     ticks: {
                         color: 'rgba(255, 255, 255, 0.6)',
-                        font: {
-                            size: 11,
-                        },
                         callback: function (value) {
                             return (value as number).toLocaleString();
                         },
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 75); // Adjust divisor for desired scaling
+                            return {
+                                size: size > 11 ? 11 : size, // Max size 12, scales down
+                            };
+                        }
                     },
                     grid: {
                         color: 'rgba(255, 255, 255, 0.1)',
@@ -186,12 +190,16 @@ export function createChartConfig(options: ChartConfigOptions) {
                     },
                     ticks: {
                         color: 'rgba(255, 255, 255, 0.6)',
-                        font: {
-                            size: 11,
-                        },
                         callback: function (value) {
                             return (value as number).toFixed(1);
                         },
+                        font: function (context) {
+                            var width = context.chart.width;
+                            var size = Math.round(width / 75); // Adjust divisor for desired scaling
+                            return {
+                                size: size > 11 ? 11 : size, // Max size 12, scales down
+                            };
+                        }
                     },
                     grid: {
                         drawOnChartArea: false,

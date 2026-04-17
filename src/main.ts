@@ -1,44 +1,14 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
+import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { createStaggeredTimeline } from "./staggered-list";
 import { affordabilityChart } from "./chart-controller";
 
-gsap.registerPlugin(ScrollTrigger);
-
-// Detect touch device
-const isTouchDevice = () => {
-  return (
-    navigator.maxTouchPoints > 0 ||
-    (window.matchMedia && window.matchMedia("(pointer: coarse)").matches)
-  );
-};
-
-const isTouch = isTouchDevice();
-
-// Initialize Lenis for smooth scrolling with mobile optimization
-const lenis = new Lenis({
-  duration: isTouch ? 1.5 : 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-  smoothWheel: true,
-  touchMultiplier: isTouch ? 2 : 1, // Increase responsiveness on touch
-});
-
-function raf(time: number) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-
-// Update ScrollTrigger on lenis scroll
-lenis.on("scroll", ScrollTrigger.update);
-gsap.ticker.add((time) => {
-  lenis.raf(time * 1000);
-});
-
-// Disable scroll during animations on touch devices
-document.addEventListener("touchmove", (e) => {
-
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+ScrollSmoother.create({
+  smooth: 1, // how long (in seconds) it takes to "catch up" to the native scroll position
+  effects: true, // looks for data-speed and data-lag attributes on elements
+  smoothTouch: 0.1 // much shorter smoothing time on touch devices (default is NO smoothing on touch devices)
 });
 
 // Automatically detect dev vs production
@@ -54,7 +24,7 @@ const IMAGES_DURATION = 1.0;
 const IMAGES_DELAY = 0.5;
 
 // ===== PAGE 1: TITLE PAGE ANIMATION =====
-const INTRO_TITLE_TIME = 0.5;
+const INTRO_TITLE_TIME = 1.0;
 const INTRO_TITLE_DURATION = 2.0;
 const INTRO_BYLINE_TIME = 0.5;
 const INTRO_BYLINE_DURATION = 2.0;
@@ -63,8 +33,8 @@ const intro_timeline = gsap.timeline({
   scrollTrigger: {
     trigger: ".intro-page",
     start: "top top",
-    end: "center center",
-    scrub: 0.2,
+    end: "bottom top",
+    scrub: 0.75,
     pin: true,
     markers: debugMode, // Set to true for debugging
   },
@@ -83,7 +53,15 @@ intro_timeline.fromTo(
     y: 50,
   },
   0.0
-)
+).to(
+  ".scroll-hint",
+  {
+    opacity: 0,
+    y: 50,
+    duration: INTRO_TITLE_TIME,
+  },
+  1.0
+);
 
 // Animate title in with dramatic scale and opacity
 intro_timeline.fromTo(
@@ -125,15 +103,18 @@ document.querySelectorAll('section').forEach((section) => {
   if (section.classList.contains('intro-page')) {
     return;
   }
+  console.log(`Creating timeline for section:`, section);
 
-  createSectionTimeline(section);
+  createSectionTimeline(section as HTMLElement);
 });
 
 // ===== CALL-TO-ACTION: ANIMATION =====
+const CALL_TO_ACTION_DURATION = 2.0;
+
 const ctaTimeline = gsap.timeline({
   scrollTrigger: {
     trigger: ".cta-section",
-    start: "top top",
+    start: "top +=50% top",
     end: "center center",
     scrub: 1.2,
     markers: debugMode,
@@ -155,11 +136,7 @@ ctaTimeline.fromTo(
   0
 ).to(
   ".cta-section .section-title",
-  {
-    opacity: 1,
-    x: 0,
-    duration: 3.0,
-  },
+  { duration: 1.0 - CALL_TO_ACTION_DURATION },
   1.0
 );
 
@@ -182,6 +159,7 @@ ctaCards.forEach((card, index) => {
     0.3 + index * 0.15
   );
 });
+ctaTimeline.addPause(1.5); // Pause after cards animate in for emphasis
 
 window.addEventListener('load', () => {
   try {
@@ -273,6 +251,8 @@ function createSectionTimeline(section: HTMLElement): gsap.core.Timeline {
         1.6
       );
     }
+
+    timeline.addPause(1.5); // Pause after animating each child for emphasis
   });
 
   section.querySelectorAll('.image-section .staggered-image').forEach((image, index) => {
@@ -474,3 +454,4 @@ if (shareBtn) {
 
 // Refresh ScrollTrigger after all timelines are created to ensure proper calculations
 ScrollTrigger.refresh();
+ScrollTrigger.normalizeScroll(); // Optional: Normalize scroll behavior across browsers for smoother experience
